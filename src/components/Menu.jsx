@@ -15,7 +15,7 @@ const Menu = () => {
             .then(response => response.data)
             .then(resultado => {
                 const lista = []
-                console.log(resultado)
+                console.log('a ver', resultado)
                 for (const [key, valor] of Object.entries(resultado)) {
                     lista.push({ label: key, url: valor })
                 }
@@ -34,19 +34,18 @@ const Menu = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        const url = seleccion.url + id;
+        const url = "https://swapi.dev/api/" + seleccion + "/" + id;
         console.log('esta es la url', url)
         axios.get(url)
             .then(response => response.data)
             .then(resultado => {
                 setError(false);
-                // if (seleccion.includes(seleccion)) {
-                    setResultado(resultado)
-                    console.log('esto es resultado de busqueda', JSON.stringify(resultado))
-                // }
+                setResultado(resultado)
+                console.log('esto es resultado de busqueda', JSON.stringify(resultado))
             })
             .catch(error => {
                 setError(true);
+                console.log(error);
             })
     }
 
@@ -58,9 +57,9 @@ const Menu = () => {
         <>
             <form onSubmit={handleSearch}>
                 <label htmlFor="search">Buscar</label>
-                <select seleccion={seleccion} onChange={setSeleccion}>
+                <select seleccion={seleccion} onChange={(e) => setSeleccion(e.target.value)}>
                     {opciones.map((item, idx) =>
-                        <option key={item.label + idx} value={item}>{item.label}</option>)}
+                        <option key={item.label + idx} value={item.label}>{item.label}</option>)}
                 </select>
                 <label htmlFor='numid'>ID:</label>
                 <input type="number" id="number" valor={id} onChange={(e) => setId(e.target.value)}></input>
@@ -76,7 +75,7 @@ const Menu = () => {
                 <div className="resultados">
                     <div>
                         {
-                            seleccion.label === 'people' ?
+                            seleccion === 'people' ?
                                 <div className="resultado">
                                     <h2>{resultado.name}</h2>
                                     <p>height: {resultado.height}</p>
@@ -89,17 +88,62 @@ const Menu = () => {
                         }
                     </div>
                     <div>
-                        {/* {
-                            resultado.films ?
+                        {
+                            seleccion === 'planets' ?
                                 <div className="resultado">
-                                    <h2>{resultado.films}</h2>
+                                    <h2>{resultado.name}</h2>
+                                    <p>rotation period: {resultado.rotation_period}</p>
+                                    <p>orbital period: {resultado.orbital_period}</p>
+                                    <p>climate: {resultado.climate}</p>
+                                    <p>gravity: {resultado.gravity}</p>
                                 </div>
                                 :
                                 ''
-                        } */}
-
-
-
+                        }
+                        {
+                            seleccion === 'film' ?
+                                <div className="resultado">
+                                    <h2>{resultado.title}</h2>
+                                    {/* <p>episode: {resultado.episode_id}</p>
+                                    <p>director: {resultado.director}</p>
+                                    <p>producer: {resultado.producer}</p>
+                                    <p>release date: {resultado.release_date}</p> */}
+                                </div>
+                                :
+                                ''
+                        }
+                        {
+                            seleccion === 'species' ?
+                                <div className="resultado">
+                                    <h2>{resultado.name}</h2>
+                                    <p>classification: {resultado.classification}</p>
+                                    <p>average height: {resultado.average_height}</p>
+                                    <p>average lifespan: {resultado.average_lifespan}</p>
+                                    <p>language: {resultado.language}</p>
+                                </div>
+                                :
+                                ''
+                        }
+                        {
+                            seleccion === 'vehicles' ?
+                                <div className="resultado">
+                                    <h2>{resultado.name}</h2>
+                                    <p>model: {resultado.model}</p>
+                                    <p>manufacturer: {resultado.manufacturer}</p>
+                                </div>
+                                :
+                                ''
+                        }
+                        {
+                            seleccion === 'starships' ?
+                                <div className="resultado">
+                                    <h2>{resultado.name}</h2>
+                                    <p>model: {resultado.model}</p>
+                                    <p>manufacturer: {resultado.manufacturer}</p>
+                                </div>
+                                :
+                                ''
+                        }
                     </div>
                 </div>
             }

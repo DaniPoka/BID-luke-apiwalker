@@ -101,16 +101,17 @@ const Menu = () => {
                                 ''
                         }
                         {
-                            seleccion === 'film' ?
+                            seleccion === 'films' ?
                                 <div className="resultado">
                                     <h2>{resultado.title}</h2>
-                                    {/* <p>episode: {resultado.episode_id}</p>
+                                    <p>episode: {resultado.episode_id}</p>
                                     <p>director: {resultado.director}</p>
                                     <p>producer: {resultado.producer}</p>
-                                    <p>release date: {resultado.release_date}</p> */}
+                                    <p>release date: {resultado.release_date}</p>
                                 </div>
                                 :
                                 ''
+                                
                         }
                         {
                             seleccion === 'species' ?
